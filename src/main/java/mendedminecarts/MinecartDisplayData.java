@@ -9,6 +9,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
@@ -75,19 +76,12 @@ public record MinecartDisplayData(Vec3d pos, Box boundingBox, Vec3d velocity, bo
         return new TranslatableText("mendedminecarts.pos").append(": ").append(formatVec3d(this.pos()));
     }
 
-    public Text getBinaryDisplayPosText() {
-        if (this.pos() == null) {
-            return new TranslatableText("mendedminecarts.pos").append(": ").append(new TranslatableText("mendedminecarts.unknown"));
-        }
-        return new TranslatableText("mendedminecarts.pos").append(": ").append(formatVec3dBinary(this.pos()));
+    public Text getBinaryDisplayPosText(String axis, double pos) {
+        return new LiteralText(axis).append(": ").append(doubleToBinaryString(pos));
     }
 
     public static String formatVec3d(Vec3d vec) {
         return "(" + String.format(getDoubleFormatString(), vec.x) + ", " + String.format(getDoubleFormatString(), vec.y) + ", " + String.format(getDoubleFormatString(), vec.z) + ")";
-    }
-
-    public static String formatVec3dBinary(Vec3d vec) {
-        return "(" + doubleToBinaryString(vec.x) + ", " + doubleToBinaryString(vec.y) + ", " + doubleToBinaryString(vec.z) + ")";
     }
 
     /**
@@ -267,7 +261,9 @@ public record MinecartDisplayData(Vec3d pos, Box boundingBox, Vec3d velocity, bo
             infoTexts.add(new TranslatableText("mendedminecarts.hopper_locked").append(": ").append(String.valueOf(this.hopperLocked())));
         }
         if (MendedMinecartsMod.DISPLAY_CART_DATA_POS_BINARY.isEnabled() && this.pos() != null) {
-            infoTexts.add(this.getBinaryDisplayPosText());
+            infoTexts.add(this.getBinaryDisplayPosText("X", this.pos.x));
+            infoTexts.add(this.getBinaryDisplayPosText("Y", this.pos.y));
+            infoTexts.add(this.getBinaryDisplayPosText("Z", this.pos.z));
         }
 
         return infoTexts;
