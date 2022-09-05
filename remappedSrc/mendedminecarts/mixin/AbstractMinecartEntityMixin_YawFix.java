@@ -65,8 +65,8 @@ public abstract class AbstractMinecartEntityMixin_YawFix extends Entity {
     }
 
     @Override
-    public void setListener(EntityChangeListener changeListener) {
-        super.setListener(changeListener);
+    public void setChangeListener(EntityChangeListener changeListener) {
+        super.setChangeListener(changeListener);
         if (MendedMinecartsMod.ROTATE_CART_TO_RAIL.isEnabled()) {
             this.fixRotationToRail(this.getYaw(), this.getPitch());
         }

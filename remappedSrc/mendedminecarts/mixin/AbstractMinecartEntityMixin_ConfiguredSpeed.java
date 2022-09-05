@@ -11,20 +11,20 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin(AbstractMinecartEntity.class)
 public abstract class AbstractMinecartEntityMixin_ConfiguredSpeed {
 
-    @Shadow protected abstract double getMaxOffRailSpeed();
+    @Shadow protected abstract double getMaxSpeed();
 
     @Redirect(
             method = "moveOnRail",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/vehicle/AbstractMinecartEntity;getMaxOffRailSpeed()D"
+                    target = "Lnet/minecraft/entity/vehicle/AbstractMinecartEntity;getMaxSpeed()D"
             )
     )
     public double getMaxSpeed(AbstractMinecartEntity instance) {
         if (MendedMinecartsMod.CART_SPEED.isDefault()) {
-            return this.getMaxOffRailSpeed();
+            return this.getMaxSpeed();
         }
-        return this.getMaxOffRailSpeed() * (MendedMinecartsMod.CART_SPEED.getState() / (8d / 20d));
+        return this.getMaxSpeed() * (MendedMinecartsMod.CART_SPEED.getState() / (8d / 20d));
     }
 
     @ModifyConstant(method = "moveOnRail", constant = @Constant(doubleValue = 2.0, ordinal = 0))

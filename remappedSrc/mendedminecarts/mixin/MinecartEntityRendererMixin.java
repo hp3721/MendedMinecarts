@@ -57,7 +57,7 @@ public abstract class MinecartEntityRendererMixin<T extends AbstractMinecartEnti
                 matrices.translate(0.0, f, 0.0);
                 matrices.multiply(this.dispatcher.getRotation());
                 matrices.scale(-0.025f, -0.025f, 0.025f);
-                Matrix4f matrix4f = matrices.peek().getModel();
+                Matrix4f matrix4f = matrices.peek().getPositionMatrix();
                 float h = -textRenderer.getWidth(infoText) / 2f;
                 textRenderer.draw(infoText, h, yOffset, -1, false, matrix4f, vertexConsumerProvider, true, 0, light);
 

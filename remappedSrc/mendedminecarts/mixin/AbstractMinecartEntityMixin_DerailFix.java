@@ -1,7 +1,6 @@
 package mendedminecarts.mixin;
 
 import mendedminecarts.AbstractMinecartEntityAccess_Physics;
-import mendedminecarts.MiscUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.enums.RailShape;
@@ -50,11 +49,11 @@ public abstract class AbstractMinecartEntityMixin_DerailFix extends Entity imple
         boolean hasHitWall = false;
         Vec3d velocity = this.getVelocity();
         if (velocity.x == 0 && Math.abs(previousVelocity.x) > 0.5) {
-            velocity = MiscUtils.vec3d_withAxis(velocity, Direction.Axis.X, previousVelocity.x * this.getVelocityMultiplier());
+            velocity = velocity.withAxis(Direction.Axis.X, previousVelocity.x * this.getVelocityMultiplier());
             hasHitWall = true;
         }
         if (velocity.z == 0 && Math.abs(previousVelocity.z) > 0.5) {
-            velocity = MiscUtils.vec3d_withAxis(velocity, Direction.Axis.Z, previousVelocity.z * this.getVelocityMultiplier());
+            velocity = velocity.withAxis(Direction.Axis.Z, previousVelocity.z * this.getVelocityMultiplier());
             hasHitWall = true;
         }
         if (!hasHitWall) {

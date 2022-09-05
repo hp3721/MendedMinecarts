@@ -12,11 +12,12 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import static net.minecraft.util.math.Direction.*;
@@ -83,9 +84,8 @@ public class RailHitboxHelper {
 //        }
         if (MendedMinecartsMod.DERAILING_CART_FIX.isEnabled()) {
             if (context instanceof EntityShapeContextAccessor entityContext) {
-                Optional<Entity> entity = entityContext.getEntity();
-
-                if (entity.isPresent() && entity.get() instanceof AbstractMinecartEntity cart && cart instanceof AbstractMinecartEntityAccess_Physics cartAccess) {
+                Entity entity = entityContext.getEntity();
+                if (entity instanceof AbstractMinecartEntity cart && cart instanceof AbstractMinecartEntityAccess_Physics cartAccess) {
                     if (cartAccess.isSelfMovingOnRail()) {
                         Set<Direction> derailFixWalls = RailHitboxHelper.DERAIL_FIX_WALLS.get(railShape);
 
